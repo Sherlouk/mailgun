@@ -16,6 +16,8 @@ public struct MailgunMessage: Content {
     public let attachment: [File]?
     public let inline: [File]?
     public let tags: [String]?
+    public let inReplyTo: String?
+    public let references: String?
 
     private enum CodingKeys: String, CodingKey {
         case from
@@ -29,9 +31,11 @@ public struct MailgunMessage: Content {
         case attachment
         case inline
         case tags = "o:tag"
+        case inReplyTo = "h:In-Reply-To"
+        case references = "h:References"
     }
 
-    public init(from: String, to: String, replyTo: String? = nil, cc: String? = nil, bcc: String? = nil, subject: String, text: String, html: String? = nil, attachments: [File]? = nil, inline: [File]? = nil, tags: [String]? = nil) {
+    public init(from: String, to: String, replyTo: String? = nil, cc: String? = nil, bcc: String? = nil, subject: String, text: String, html: String? = nil, attachments: [File]? = nil, inline: [File]? = nil, tags: [String]? = nil, inReplyTo: String? = nil, references: [String]? = nil) {
         self.from = from
         self.to = to
         self.replyTo = replyTo
@@ -43,9 +47,11 @@ public struct MailgunMessage: Content {
         self.attachment = attachments
         self.inline = inline
         self.tags = tags
+        self.inReplyTo = inReplyTo
+        self.references = references?.joined(separator: " ")
     }
 
-    public init(from: String, to: [String], replyTo: String? = nil, cc: [String]? = nil, bcc: [String]? = nil, subject: String, text: String, html: String? = nil, attachments: [File]? = nil, inline: [File]? = nil, tags: [String]? = nil) {
+    public init(from: String, to: [String], replyTo: String? = nil, cc: [String]? = nil, bcc: [String]? = nil, subject: String, text: String, html: String? = nil, attachments: [File]? = nil, inline: [File]? = nil, tags: [String]? = nil, inReplyTo: String? = nil, references: [String]? = nil) {
         self.from = from
         self.to = to.joined(separator: ",")
         self.replyTo = replyTo
@@ -57,9 +63,11 @@ public struct MailgunMessage: Content {
         self.attachment = attachments
         self.inline = inline
         self.tags = tags
+        self.inReplyTo = inReplyTo
+        self.references = references?.joined(separator: " ")
     }
 
-    public init(from: String, to: [FullEmail], replyTo: String? = nil, cc: [FullEmail]? = nil, bcc: [FullEmail]? = nil, subject: String, text: String, html: String? = nil, attachments: [File]? = nil, inline: [File]? = nil, tags: [String]? = nil) {
+    public init(from: String, to: [FullEmail], replyTo: String? = nil, cc: [FullEmail]? = nil, bcc: [FullEmail]? = nil, subject: String, text: String, html: String? = nil, attachments: [File]? = nil, inline: [File]? = nil, tags: [String]? = nil, inReplyTo: String? = nil, references: [String]? = nil) {
         self.from = from
         self.to = to.stringArray.joined(separator: ",")
         self.replyTo = replyTo
@@ -71,6 +79,8 @@ public struct MailgunMessage: Content {
         self.attachment = attachments
         self.inline = inline
         self.tags = tags
+        self.inReplyTo = inReplyTo
+        self.references = references?.joined(separator: " ")
     }
 }
 
